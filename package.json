@@ -1,0 +1,44 @@
+{
+  "name": "protheus-genealogy",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.16.1",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:integration": "vitest run -c vitest.integration.config.ts",
+    "test:tlpp": "tsx scripts/protheus/run-tlpp-tests.ts",
+    "lint:tlpp": "tsx scripts/protheus/lint-tlpp.ts",
+    "tlpp:build": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/protheus/compile-and-restart.ps1",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p apps/web/tsconfig.spec.json",
+    "protheus:test-connection": "tsx scripts/sql/test-connection.ts",
+    "protheus:tables": "tsx scripts/sql/schema-discovery.ts",
+    "protheus:describe": "tsx scripts/sql/describe-table.ts",
+    "protheus:find-column": "tsx scripts/sql/find-column.ts",
+    "protheus:sample": "tsx scripts/sql/sample-data.ts",
+    "protheus:query": "tsx scripts/sql/query.ts",
+    "protheus:investigate-lot": "tsx scripts/sql/investigate-lot.ts",
+    "gentest:seed": "tsx scripts/protheus/gentest-seed.ts",
+    "test:e2e": "tsx tests/e2e/central.e2e.ts",
+    "web:start": "pnpm --filter @genealogy/web start",
+    "protheus:explain": "tsx scripts/sql/explain-sql-docs.ts",
+    "check": "pnpm typecheck && pnpm test && pnpm lint:tlpp && pnpm test:tlpp && pnpm test:integration",
+    "check:all": "pnpm check && pnpm test:e2e",
+    "docs:screens": "tsx scripts/docs/capture-screens.ts",
+    "perf:api": "tsx scripts/perf/measure-api.ts"
+  },
+  "dependencies": {
+    "@genealogy/contract": "workspace:*",
+    "@genealogy/protheus-db": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "playwright": "^1.64.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0"
+  }
+}
